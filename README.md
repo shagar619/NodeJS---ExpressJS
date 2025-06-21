@@ -1,4 +1,4 @@
-<!-- markdownlint-disable MD012 MD026 MD001 MD022 MD032 MD029 MD019 MD034 MD031 MD047 MD040  -->
+<!-- markdownlint-disable MD012 MD026 MD001 MD022 MD032 MD029 MD019 MD034 MD031 MD047 MD040 MD009 MD058  -->
 
 
 # Questions About Node JS
@@ -1124,3 +1124,725 @@ http.createServer((req, res) => {
   console.log('Server running on port 3000');
 });
 ```
+---
+---
+---
+
+## 🔹What is a buffer in NodeJS?
+A buffer is a temporary storage area in memory used to hold data while it is being transferred between two locations. In Node.js, buffers are used to handle binary data streams, such as file I/O or network communication. Buffers allow you to work with raw binary data directly, without having to convert it to a string or other data type.
+
+#### 🧱 Key Features of Buffers
+- **Fixed Size** : Buffers have a fixed size, which is defined when they are created.
+- **Binary Data** : Buffers can hold raw binary data, making them suitable for handling files, images, and network protocols.
+- **Efficient** : Buffers are designed for high performance and low memory overhead.
+
+#### ✅ Use Cases :
+- Reading and writing files
+- Handling network protocols (TCP, UDP)
+- Processing binary data (images, audio, video)
+- Converting between different encodings (`utf8`, `base64`, `hex`, etc.).
+
+#### 📦 Creating Buffers
+```javascript
+const buffer1 = Buffer.alloc(10); // Creates a buffer of size 10 bytes, filled with zeros
+const buffer2 = Buffer.from('Hello, World!'); // Creates a buffer from a string
+const buffer3 = Buffer.from([1, 2, 3, 4, 5]); // Creates a buffer from an array of bytes
+```
+
+#### Working with Buffers:
+```javascript
+const buf = Buffer.from('Node.js');
+
+// Access bytes
+console.log(buf[0]); // 78 (ASCII for 'N')
+
+// Modify buffer
+buf[0] = 110; // changes 'N' to 'n'
+
+// Convert back to string
+console.log(buf.toString()); // 'node.js'
+``` 
+
+#### Buffer Methods
+| Method                | Description |
+|-----------------------|-------------|
+| `Buffer.alloc(size)`  | Creates a buffer of the specified size, filled with zeros. |
+| `Buffer.from(string)` | Creates a buffer from a string. |
+| `Buffer.from(array)`  | Creates a buffer from an array of bytes. |
+| `buf.toString()`      | Converts the buffer to a string. |
+| `buf.length`          | Gets the length of the buffer. |
+| `buf[index]`         | Accesses a specific byte in the buffer. |
+
+#### Example Use Case :
+
+```javascript
+const fs = require('fs');
+const buffer = Buffer.alloc(1024); // Create a buffer of 1KB
+fs.readFile('example.txt', (err, data) => {
+  if (err) throw err;
+  data.copy(buffer); // Copy file data into the buffer
+  console.log('Buffer content:', buffer.toString('utf8', 0, data.length));
+});
+```
+> N:B: Here, `data` is a `Buffer` containing the file's binary content.
+
+---
+---
+---
+
+
+## 🔹What are streams in NodeJS?
+
+Streams are a powerful feature in Node.js that allow you to read and write data in a continuous flow, rather than loading the entire data into memory at once. This is particularly useful for handling large files or data sources, as it reduces memory usage and improves performance.
+
+#### 🔄 Four Types of Streams
+
+| Type       | Description                                  | Example Usage                     |
+|------------|----------------------------------------------|-----------------------------------|
+| `Readable` | Stream from which data can be read           | Reading files, HTTP requests      |
+| `Writable` | Stream to which data can be written          | Writing to files, HTTP responses  |
+| `Duplex`   | Stream that is both readable and writable    | TCP sockets                       |
+| `Transform`| Duplex stream that modifies the data         | Compression, encryption, etc.     |
+
+#### 📦 Readable Streams
+Readable streams allow you to read data from a source, such as a file or network socket, in chunks. You can listen for the `data` event to process each chunk of data as it arrives.
+
+```javascript
+const fs = require('fs');
+const readableStream = fs.createReadStream('example.txt', { encoding: 'utf8' });
+readableStream.on('data', (chunk) => {
+  console.log('Received chunk:', chunk);
+});
+readableStream.on('end', () => {
+  console.log('No more data to read.');
+});
+```
+
+#### 📦 Writable Streams
+Writable streams allow you to write data to a destination, such as a file or network socket. You can use the `write()` method to send data to the stream.
+
+```javascript
+const fs = require('fs');
+const writableStream = fs.createWriteStream('output.txt', { encoding: 'utf8' });
+writableStream.write('Hello, World!\n');
+writableStream.write('This is a writable stream example.\n');
+writableStream.end(() => {
+  console.log('Data has been written to output.txt');
+});
+```
+#### 📦 Duplex Streams
+Duplex streams are both readable and writable. They allow you to read data from a source and write data to a destination simultaneously.
+
+```javascript
+const { Duplex } = require('stream');
+const duplexStream = new Duplex({
+  read(size) {
+    this.push('Hello from readable side!\n');
+    this.push(null); // No more data to read
+  },
+  write(chunk, encoding, callback) {
+    console.log('Received from writable side:', chunk.toString());
+    callback();
+  }
+});
+duplexStream.on('data', (chunk) => {
+  console.log('Data from duplex stream:', chunk.toString());
+});
+duplexStream.write('Hello from writable side!\n');
+duplexStream.end();
+```
+#### 📦 Transform Streams
+Transform streams are a type of duplex stream that can modify the data as it is being read or written. They are useful for tasks like compression, encryption, or data transformation.
+
+```javascript
+const { Transform } = require('stream');
+const transformStream = new Transform({
+  transform(chunk, encoding, callback) {
+    const upperCaseChunk = chunk.toString().toUpperCase();
+    this.push(upperCaseChunk);
+    callback();
+  }
+});
+const readableStream = fs.createReadStream('example.txt', { encoding: 'utf8' });
+readableStream.pipe(transformStream).pipe(process.stdout);
+```
+
+#### 🎯 Benefits of Streams :
+- Efficient for large or continuous data
+
+- Reduces memory usage
+
+- Enables real-time data processing
+
+- Ideal for I/O-bound applications
+
+---
+---
+---
+
+## 🔹What is the passport module in NodeJS?
+
+Passport is a popular authentication middleware for Node.js that simplifies the process of implementing various authentication strategies in your application. It provides a consistent API for handling user authentication, making it easier to integrate with different authentication providers (like Google, Facebook, Twitter, etc.) or use local authentication (username/password).
+
+It provides a simple and modular approach to handling different types of authentication strategies such as :
+
+- Username/password (local)
+
+- OAuth (Google, Facebook, GitHub, etc.)
+
+- JWT (JSON Web Tokens)
+
+- SAML, LDAP, OpenID Connect, and many others
+
+#### 📦 Installing Passport
+
+```bash
+npm install passport
+```
+To use the local strategy (username/password), also install :
+
+```bash
+npm install passport-local
+```
+
+#### ✅ Example : Local Authentication with Passport
+
+1. Setup Passport
+
+```javascript
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+
+// Dummy user for example
+const user = { id: 1, username: 'admin', password: 'secret' };
+
+// Configure local strategy
+passport.use(new LocalStrategy((username, password, done) => {
+  if (username === user.username && password === user.password) {
+    return done(null, user);
+  } else {
+    return done(null, false, { message: 'Incorrect credentials.' });
+  }
+}));
+
+// Serialize user to session
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+// Deserialize user from session
+passport.deserializeUser((id, done) => {
+  if (id === user.id) {
+    done(null, user);
+  } else {
+    done('User not found');
+  }
+});
+```
+2. Integrate with Express
+
+```javascript
+const express = require('express');
+const session = require('express-session');
+const app = express();
+
+app.use(session({
+  secret: 'your_secret_key',
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(express.urlencoded({ extended: true })); // For parsing form data
+app.post('/login', passport.authenticate('local', {
+  successRedirect: '/success',
+  failureRedirect: '/login'
+}));
+app.get('/success', (req, res) => {
+  res.send(`Welcome ${req.user.username}!`);
+});
+app.get('/login', (req, res) => {
+  res.send('<form method="post"><input name="username"><input name="password" type="password"><button type="submit">Login</button></form>');
+});
+app.listen(3000, () => {
+  console.log('Server running on port 3000');
+});
+```
+
+#### 🔐 Protecting Routes
+```javascript
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/login');
+}
+
+app.get('/protected', ensureAuthenticated, (req, res) => {
+  res.send(`This is a protected route. Welcome ${req.user.username}!`);
+});
+```
+
+#### 🌐 Other Strategies
+You can easily add other strategies :
+
+- Google OAuth : `passport-google-oauth20`
+
+- JWT : `passport-jwt`
+
+- Facebook : `passport-facebook`
+
+Each strategy follows the same pattern : `passport.use(new Strategy(...))`.
+
+---
+---
+---
+
+## 🔹What is callback hell?
+
+Callback hell, also known as "Pyramid of Doom," refers to a situation in JavaScript where multiple nested callbacks make the code difficult to read and maintain. This often occurs when dealing with asynchronous operations, leading to deeply nested structures that resemble a pyramid.
+
+#### ❌ Example of Callback Hell
+
+```javascript
+doSomething(function (err, result1) {
+  if (err) throw err;
+
+  doSomethingElse(result1, function (err, result2) {
+    if (err) throw err;
+
+    doAnotherThing(result2, function (err, result3) {
+      if (err) throw err;
+
+      finish(result3, function (err, finalResult) {
+        if (err) throw err;
+
+        console.log('Done:', finalResult);
+      });
+    });
+  });
+});
+```
+
+This nesting keeps growing with each async operation, making the code:
+
+- Hard to follow
+
+- Difficult to debug
+
+- Error-prone
+
+- Unscalable
+
+
+#### ✅ How to Fix Callback Hell :
+
+1. **Use Promises** : Promises allow you to chain asynchronous operations, flattening the structure.
+
+```javascript
+doSomething()
+  .then(result1 => doSomethingElse(result1))
+  .then(result2 => doAnotherThing(result2))
+  .then(result3 => finish(result3))
+  .then(finalResult => console.log('Done:', finalResult))
+  .catch(err => console.error('Error:', err));
+```
+2. **Use Async/Await** : This syntax makes asynchronous code look synchronous, improving readability.
+
+```javascript
+async function run() {
+  try {
+    const result1 = await doSomething();
+    const result2 = await doSomethingElse(result1);
+    const result3 = await doAnotherThing(result2);
+    const finalResult = await finish(result3);
+    console.log('Done:', finalResult);
+  } catch (err) {
+    console.error('Error:', err);
+  }
+}
+run();
+```
+3. **Modularize Code** : Break down complex functions into smaller, reusable functions to reduce nesting.
+
+```javascript
+function step1(data, cb) { /* ... */ }
+function step2(data, cb) { /* ... */ }
+function step3(data, cb) { /* ... */ }
+
+// Then call them in sequence
+step1(input, function (err, result1) {
+  if (err) return handleError(err);
+  step2(result1, function (err, result2) {
+    if (err) return handleError(err);
+    step3(result2, function (err, result3) {
+      if (err) return handleError(err);
+      console.log('Done:', result3);
+    });
+  });
+});
+```
+
+---
+---
+---
+
+## 🔹What are timers module in NodeJS?
+
+The timers module in Node.js provides a way to execute code after a specified delay or at regular intervals. It is built into Node.js and is part of the global scope, so you don't need to require it explicitly.
+
+#### 🕒 Key Functions
+
+1. **setTimeout()**: Executes a function after a specified delay (in milliseconds).
+
+```javascript
+setTimeout(() => {
+  console.log('Executed after 2 seconds');
+}, 2000);
+```
+
+2. **setInterval()**: Repeatedly executes a function at specified intervals (in milliseconds).
+
+```javascript
+setInterval(() => {
+  console.log('Executed every 1 second');
+}, 1000);
+```
+
+3. **clearTimeout()**: Cancels a timeout that was previously established by `setTimeout()`.
+
+```javascript
+const timeoutId = setTimeout(() => {
+  console.log('This will not be executed');
+}, 2000);
+clearTimeout(timeoutId);
+```
+
+4. **clearInterval()**: Cancels an interval that was previously established by `setInterval()`.
+
+```javascript
+const intervalId = setInterval(() => {
+  console.log('This will not be executed');
+}, 1000);
+clearInterval(intervalId);
+```
+
+### ⏳ Use Cases
+
+- Delaying the execution of a function
+- Repeatedly executing a function at fixed intervals
+- Implementing timeouts for asynchronous operations
+
+### ⚠️ Important Notes
+
+- Timers are not guaranteed to execute exactly after the specified delay. They are subject to the event loop and other factors that may affect timing.
+- Using timers can lead to callback hell if not managed properly, so consider using Promises or async/await for better readability.
+### 🧰 Example: Using Timers in Node.js
+
+```javascript
+console.log('Start');
+
+setTimeout(() => {
+  console.log('Executed after 2 seconds');
+}, 2000);
+
+setInterval(() => {
+  console.log('Executed every 1 second');
+}, 1000);
+
+console.log('End');
+```
+### Output
+```
+Start
+End
+Executed after 2 seconds
+Executed every 1 second
+Executed every 1 second
+Executed every 1 second
+...
+```
+#### 📦 Common Timer Functions
+
+| Function              | Description                                                       |
+|-----------------------|-------------------------------------------------------------------|
+| `setTimeout(fn, ms)`  | Executes a function once after a delay                            |
+| `setInterval(fn, ms)` | Repeatedly executes a function at every interval                  |
+| `setImmediate(fn)`    | Executes a function immediately after I/O events                  |
+| `process.nextTick(fn)`| Executes a function before the next event loop iteration begins   |
+
+---
+---
+---
+
+
+## 🔹What is the difference between `fs.readFile` and `fs.readFileSync` in NodeJS?
+
+`fs.readFile` and `fs.readFileSync` are both methods in the Node.js `fs` (file system) module used to read files, but they differ in how they handle asynchronous operations.
+| Feature                | `fs.readFile`                          | `fs.readFileSync`                     |
+|-----------------------|---------------------------------------|---------------------------------------|
+| Asynchronous           | Yes                                   | No                                    |
+| Blocking               | No                                    | Yes                                   |
+| Callback               | Requires a callback                   | Returns the content directly          |
+| Use Case               | Non-blocking I/O operations           | Simple scripts or startup tasks      |
+| Error Handling         | Uses a callback for error handling    | Throws an error if file not found     |
+| Performance            | Better for I/O-bound tasks            | Slower for large files due to blocking|
+| Example Usage         | `fs.readFile('file.txt', callback)`  | `const data = fs.readFileSync('file.txt')` |
+#### 📦 Example of `fs.readFile`
+
+```javascript
+const fs = require('fs');
+fs.readFile('example.txt', 'utf8', (err, data) => {
+  if (err) {
+    console.error('Error reading file:', err);
+    return;
+  }
+  console.log('File content:', data);
+});
+```
+#### 📦 Example of `fs.readFileSync`
+
+```javascript
+const fs = require('fs');
+const data = fs.readFileSync('example.txt', 'utf8');
+console.log('File content:', data);
+```
+#### 📌 When to Use Each
+- **Use `fs.readFile`** when you want to perform non-blocking I/O operations, especially in a server environment where you want to handle multiple requests concurrently without blocking the event loop.
+- **Use `fs.readFileSync`** when you need to read a file synchronously, such as during the startup of a script or when you are sure that the file is small and won't block the event loop for too long.
+
+---
+---
+---
+
+## 🔹What is a `.body-parser` in NodeJS?
+
+`body-parser` is a middleware in Node.js that is used to parse incoming request bodies in a middleware before your handlers, available under the `req.body` property. It is particularly useful for handling data sent in HTTP requests, such as form submissions or JSON payloads.
+
+#### 📦 Installing body-parser
+```bash
+npm install body-parser
+```
+#### ✅ Basic Usage
+```javascript
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+// Parse application/json
+app.use(bodyParser.json());
+// Parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
+// Example route
+app.post('/submit', (req, res) => {
+  console.log(req.body); // Access parsed data
+  res.send('Data received');
+});
+app.listen(3000, () => {
+  console.log('Server running on port 3000');
+});
+```
+#### 📌 Middleware Options
+- `bodyParser.json()` : Parses incoming requests with JSON payloads.
+- `bodyParser.urlencoded({ extended: true })` : Parses incoming requests with URL-encoded payloads (like form submissions).
+- `bodyParser.text()` : Parses incoming requests with plain text payloads.
+- `bodyParser.raw()` : Parses incoming requests with binary data.
+#### 📌 Example of Parsing JSON Data
+```javascript
+app.post('/json', (req, res) => {
+  console.log(req.body); // Access parsed JSON data
+  res.json({ message: 'JSON data received', data: req.body });
+});
+```
+#### 📌 Example of Parsing URL-Encoded Data
+```javascript
+app.post('/form', (req, res) => {
+  console.log(req.body); // Access parsed form data
+  res.json({ message: 'Form data received', data: req.body });
+});
+```
+#### 📌 Important Notes
+- `body-parser` is now built into Express as of version 4.16.0, so you can use `express.json()` and `express.urlencoded()` instead of requiring `body-parser` separately.
+- Always use `body-parser` before your route handlers to ensure that the request body is parsed before you access it.
+### 📦 Example with Express Built-in Middleware
+```javascript
+const express = require('express');
+const app = express();
+// Parse application/json
+app.use(express.json());
+// Parse application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
+// Example route
+app.post('/submit', (req, res) => {
+  console.log(req.body); // Access parsed data
+  res.send('Data received');
+});
+app.listen(3000, () => {
+  console.log('Server running on port 3000');
+});
+```
+---
+---
+---
+
+## 🔹What is `CORS` in NodeJS?
+
+CORS stands for Cross-Origin Resource Sharing. It is a security feature implemented by browsers to control how web pages can request resources from a different domain (origin) than the one that served the web page.
+
+> In Node.js (especially with Express.js), CORS is something you configure on your server to allow or block requests from other origins.
+#### 📦 Why CORS is Important
+Normally, browsers block cross-origin HTTP requests (for security reasons). So if your frontend (e.g., `http://localhost:3000`) tries to call an API on `http://localhost:5000`, the browser will block it unless the server explicitly allows it.
+#### 📦 How CORS Works
+When a web application makes a cross-origin request, the browser sends an HTTP request with an `Origin` header indicating the origin of the request. The server can respond with specific CORS headers to indicate whether the request is allowed or denied.
+
+
+#### 🔐 CORS in Action
+Without CORS:
+```http
+Origin: http://localhost:3000
+GET http://localhost:5000/api/users → ❌ Blocked by browser
+```
+```javascript
+fetch('http://localhost:5000/api/data')
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error('Error:', error));
+```
+With CORS enabled:
+```http
+Origin: http://localhost:3000
+GET http://localhost:5000/api/users → ✅ Allowed by server
+```
+```javascript
+fetch('http://localhost:5000/api/data', {
+  method: 'GET',
+  headers: {
+    'Origin': 'http://localhost:3000'
+  }
+})
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error('Error:', error));
+```
+
+#### ✅ Enabling CORS in Node.js (Express)
+#### 📦 Step 1: Install cors middleware
+```bash
+npm install cors
+```
+#### 🛠 Step 2: Use it in your Express app
+```javascript
+const express = require('express');
+const cors = require('cors');
+
+const app = express();
+
+// Allow all origins (open CORS policy)
+app.use(cors());
+
+app.get('/api/data', (req, res) => {
+  res.json({ message: 'CORS enabled!' });
+});
+```
+
+#### 🔧 Restrict to Specific Origin
+```javascript
+app.use(cors({
+  origin: 'http://localhost:3000' // Allow only this origin
+}));
+```
+
+#### ⚙️ CORS Options
+
+```javascript
+app.use(cors({
+  origin: 'http://example.com', // Allow only this origin
+  methods: 'GET,POST', // Allowed HTTP methods
+  allowedHeaders: 'Content-Type,Authorization', // Allowed headers
+  credentials: true // Allow cookies to be sent
+}));
+```
+
+#### 📦 Common CORS Headers
+| Header                  | Description                                                  |
+|-------------------------|--------------------------------------------------------------|
+| `Access-Control-Allow-Origin` | Specifies which origins are allowed to access the resource. Use `*` to allow all origins. |
+| `Access-Control-Allow-Methods` | Specifies which HTTP methods are allowed (e.g., GET, POST, PUT, DELETE). |
+| `Access-Control-Allow-Headers` | Specifies which headers can be included in the request. |
+| `Access-Control-Allow-Credentials` | Indicates whether the browser should include credentials (cookies, HTTP authentication) in the request. |
+| `Access-Control-Expose-Headers` | Specifies which headers can be exposed to the browser. |
+| `Access-Control-Max-Age` | Specifies how long the results of a preflight request can be cached. |
+
+---
+---
+---
+
+## 🔹What is the purpose of NODE_ENV?
+
+**`NODE_ENV`** is an environment variable in Node.js used to define the environment in which a Node.js application is running — such as:
+
+- `development`
+
+- `production`
+
+- `test`
+
+#### 🔧 Common Environment Values
+
+| Value         | Purpose                                                   |
+|---------------|------------------------------------------------------------|
+| `development` | Default for development — detailed logs, no caching       |
+| `production`  | For deployed apps — optimized, minified, minimal logging  |
+| `test`        | Used when running automated tests                         |
+
+#### ✅ Example Usage in Code
+```javascript
+if (process.env.NODE_ENV === 'production') {
+  console.log('Running in production mode');
+} else if (process.env.NODE_ENV === 'development') {
+  console.log('Running in development mode');
+} else {
+  console.log('Running in an unknown environment');
+}
+```
+
+#### ⚙️ How to Set NODE_ENV
+- **Linux/Mac**: Set it in the terminal before running your app.
+```bash
+export NODE_ENV=production
+node app.js
+```
+```bash
+set NODE_ENV=production
+node app.js
+```
+- **Windows**: Use `set` command in the Command Prompt.
+```bash
+set NODE_ENV=production
+node app.js
+```
+- **Using npm scripts**: You can set `NODE_ENV` in your `package.json` scripts.
+```json
+{
+  "scripts": {
+    "start": "NODE_ENV=production node app.js",
+    "dev": "NODE_ENV=development nodemon app.js"
+  }
+}
+```
+- install `cross-env` for cross-platform compatibility:
+```bash
+npm install cross-env
+```
+- **Using dotenv**: You can also use a `.env` file with the `dotenv` package to manage environment variables.
+```bash
+NODE_ENV=production
+```
+```javascript
+require('dotenv').config();
+console.log(process.env.NODE_ENV); // 'production'
+```
+
+---
+---
+---
+
