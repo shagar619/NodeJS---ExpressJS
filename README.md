@@ -1,4 +1,4 @@
-<!-- markdownlint-disable MD012 MD026 MD001 MD022 MD032 MD029 MD019 MD034 MD031 MD047 MD040 MD009 MD058  -->
+<!-- markdownlint-disable MD012 MD026 MD001 MD022 MD032 MD029 MD019 MD034 MD031 MD047 MD040 MD009 MD058 MD024  -->
 
 
 # Questions About Node JS
@@ -565,7 +565,7 @@ readFiles();
 ---
 ---
 
-## 🔹What is package.json in NodeJS?
+## 🔹What is `package.json` in NodeJS?
 
 `package.json` is a file that contains metadata about your Node.js project, such as its name, version, dependencies, and scripts. It is used by the Node.js package manager, npm, to manage the project's dependencies and build process.
 
@@ -602,11 +602,6 @@ readFiles();
 }
 ```
 
-## 📘 What is `package.json`?
-
-`package.json` is the core configuration file in a Node.js project. It contains metadata about your project, including dependencies, scripts, version info, and more.
-
----
 
 #### 📄 Key Fields
 
@@ -660,6 +655,12 @@ There are the two most commonly used libraries in NodeJs:
 In NodeJS, `require` is used for importing modules, while `import` is used for importing modules in ES6 modules.
 - **`require`** : Used to import modules in NodeJS. It is synchronous and loads the module synchronously.
 - **`import`** : Used to import modules in ES6 modules. It is asynchronous and loads the module asynchronously.
+
+#### ❓ What is the difference between `dependencies` and `devDependencies` in the `package.json` file in Node.js?
+
+In Node.js, `dependencies` and `devDependencies` are two sections in the `package.json` file that specify the packages your project needs.
+- **`dependencies`** : These are the packages that your application needs to run in production. They are essential for the application to function correctly.
+- **`devDependencies`** : These are the packages that are only needed during development, such as testing frameworks, build tools, and linters. They are not required for the application to run in production.
 
 ---
 ---
@@ -1846,3 +1847,122 @@ console.log(process.env.NODE_ENV); // 'production'
 ---
 ---
 
+
+#### 🔹What is a cluster in NodeJS?
+
+A cluster in Node.js is a module that allows you to create multiple child processes (workers) that share the same server port. This is useful for taking advantage of multi-core systems, as it enables you to handle more requests concurrently by distributing the load across multiple processes.
+
+#### 📦 How It Works
+When you create a cluster, the master process forks multiple worker processes. Each worker runs in its own memory space and can handle incoming requests independently. The master process manages the workers and can also listen for events like worker exit or error.
+
+
+#### 🔧 How to Use Clusters
+
+1. **Import the Cluster Module**
+```javascript
+const cluster = require('cluster');
+const http = require('http');
+const os = require('os');
+
+const numCPUs = os.cpus().length;
+
+if (cluster.isMaster) {
+  console.log(`Master ${process.pid} is running`);
+
+  // Fork workers
+  for (let i = 0; i < numCPUs; i++) {
+    cluster.fork();
+  }
+
+  // Listen for worker exit
+  cluster.on('exit', (worker, code, signal) => {
+    console.log(`Worker ${worker.process.pid} died`);
+  });
+
+} else {
+  // Workers share the TCP connection
+  http.createServer((req, res) => {
+    res.writeHead(200);
+    res.end(`Handled by worker ${process.pid}\n`);
+  }).listen(8000);
+
+  console.log(`Worker ${process.pid} started`);
+}
+```
+
+2. **Run the Application**
+```bash
+node app.js
+```
+
+3. **Access the Application**
+Open your browser and go to `http://localhost:8000`. You should see "Hello World" displayed.
+
+#### ✅ Benefits of Using Clusters
+- **Improved Performance**: By utilizing multiple CPU cores, clusters can handle more requests simultaneously.
+- **Fault Tolerance**: If one worker crashes, the others can continue to handle requests.
+- **Load Balancing**: The cluster module automatically distributes incoming requests across the available workers.
+#### 📌 Important Notes
+- Clusters share the same server port, so you need to ensure that your application can handle concurrent requests properly.
+- Each worker has its own memory space, so they do not share variables or state.
+
+#### Cluster Methods
+| Method                | Description                                                  |
+|-----------------------|--------------------------------------------------------------|
+| `cluster.fork()`      | Creates a new worker process.                                |
+| `cluster.isMaster`    | Boolean indicating if the current process is the master.    |
+| `cluster.isWorker`    | Boolean indicating if the current process is a worker.      |
+| `cluster.workers`     | An object containing all worker processes.                   |
+| `cluster.on('exit')`  | Event listener for when a worker exits.                     |
+| `cluster.on('online')`| Event listener for when a worker is online.                 |
+| `cluster.kill()`      | Kills a worker process.                                      |
+| `cluster.send()`      | Sends a message to a worker process.                         |
+| `cluster.process.send()` | Sends a message from a worker to the master process. |
+
+#### Example of Cluster Usage
+```javascript
+const cluster = require('cluster');
+const http = require('http');
+const os = require('os');
+
+const numCPUs = os.cpus().length;
+
+if (cluster.isMaster) {
+  console.log(`Master ${process.pid} is running`);
+
+  // Fork workers
+  for (let i = 0; i < numCPUs; i++) {
+    cluster.fork();
+  }
+
+  // Listen for worker exit
+  cluster.on('exit', (worker, code, signal) => {
+    console.log(`Worker ${worker.process.pid} died`);
+  });
+
+} else {
+  // Workers share the TCP connection
+  http.createServer((req, res) => {
+    res.writeHead(200);
+    res.end(`Handled by worker ${process.pid}\n`);
+  }).listen(8000);
+
+  console.log(`Worker ${process.pid} started`);
+}
+```
+#### Example Output
+When you run the above code, you will see output similar to this in your terminal:
+```Master 12345 is running
+Worker 12346 started
+Worker 12347 started
+Worker 12348 started
+Worker 12349 started
+Handled by worker 12346
+Handled by worker 12347
+Handled by worker 12348
+Handled by worker 12349
+```
+
+---
+---
+---
