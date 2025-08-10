@@ -2620,6 +2620,30 @@ express --view=ejs myapp
 express --no-view myapp
 ```
 
+**Example Output (EJS Template Engine):**
+After running `express --view=ejs myapp`, then:
+
+```bash
+myapp/
+├── app.js              # Main app setup
+├── package.json
+├── bin/
+│   └── www              # Starts the server
+├── public/              # Static assets
+│   ├── images/
+│   ├── javascripts/
+│   └── stylesheets/
+│       └── style.css
+├── routes/              # Routes
+│   ├── index.js
+│   └── users.js
+├── views/               # Templates
+│   ├── error.ejs
+│   ├── index.ejs
+│   └── layout.ejs
+
+```
+
 
 
 
