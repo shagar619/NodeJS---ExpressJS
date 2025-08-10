@@ -2477,6 +2477,72 @@ Think of it as your code quality assistant — it doesn’t run your code, but i
 - Code style issues (e.g., indentation, quotes, semicolons)
 - Best practice violations (e.g., unsafe type checks, improper equality checks)
 
+**Example Setup:**
+
+**Install ESLint:**
+```bash
+npm install eslint
+```
+
+**Initialize Config:**
+```bash
+npx eslint --init
+```
+
+You’ll be asked:
+
+- Environment (Node, browser, etc.)
+- Style guide (Airbnb, Standard, etc.)
+- Use TypeScript? (if applicable)
+- Format (JSON, YAML, JS)
+
+**Sample `.eslintrc.json`:**
+```json
+{
+  "env": {
+    "browser": true,
+    "node": true,
+    "es2021": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:prettier/recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "rules": {
+    "semi": ["error", "always"],
+    "quotes": ["error", "single"],
+    "no-unused-vars": "warn"
+  }
+}
+```
+
+**Example in Action:**
+
+```javascript
+// Bad code (violates rules)
+let name = "John" // missing semicolon, double quotes, unused variable
+
+console.log('Hello');
+```
+
+**ESLint output:**
+```vbnet
+2:5  warning  'name' is assigned a value but never used  no-unused-vars
+1:12 error    Strings must use singlequote              quotes
+1:21 error    Missing semicolon                         semi
+```
+**Fixing the code:**
+```javascript
+// Good code (follows rules)
+let name = "John";
+console.log('Hello');
+```
+
+
 
 
 
