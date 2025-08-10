@@ -116,12 +116,6 @@ Here are some reasons why NodeJS is preferred:
 
 NPM is a package manager for Node.js that allows developers to easily install, manage, and share packages of code. It is a free and open-source package management system that is used to install and manage packages for Node.js projects.
 
-Key components of NPM:
-
-1. **npm CLI** — The command-line tool that comes with Node.js.
-2. **npm Registry** — The online database of open-source JavaScript packages (https://www.npmjs.com/).
-3. **package.json** — The config file in your project that lists all dependencies and scripts.
-
 #### 🔑 Key Concepts
 
 #### ✅ 1. Package
@@ -247,9 +241,6 @@ NPM enables:
 
 - Easy setup of build tools, linters, test frameworks, and task runners
 
----
----
----
 
 ## 🔹What are the module in Node.js?
 
@@ -325,7 +316,7 @@ const math = require('./math');
 console.log(math.add(2, 3)); // 5
 ```
 
-### 📘 ES Module Support
+#### 📘 ES Module Support
 
 You can also use ES Modules (`import/export`) by:
 
@@ -367,10 +358,6 @@ axios.get('https://api.example.com/data')
 #### ❓How to import a module in NodeJS?
 We use the `require` module to import the External libraries in NodeJS. The result returned by `require()` is stored in a variable, which is used to invoke the functions using the dot notation.
 
----
----
----
-
 ## 🔹What is middleware?
 
 **Middleware** in Node.js is a function that is executed between the **request** (`req`) and **response** (`res`) lifecycle of an HTTP **request** (`req`). It allows you to modify the **request** (`req`) or **response** (`res`) before it reaches the final destination. Middleware can be used for various purposes such as logging, authentication, error handling, and data transformation.
@@ -400,7 +387,6 @@ app.use((req, res, next) => {
 | Third-party | Installed via NPM (e.g., `morgan`, `cors`) |
 | Error-handling | Defined with **four** parameters: `(err, req, res, next)` |
 
----
 
 #### 💡 Example: Application-Level Middleware
 
@@ -438,8 +424,6 @@ const morgan = require('morgan');
 app.use(morgan('dev')); // Logs HTTP requests
 ```
 
----
-
 #### ⚠️ Error-Handling Middleware
 
 ```js
@@ -451,7 +435,6 @@ app.use((err, req, res, next) => {
 
 > ✅ Note: Error-handling middleware **must** have 4 parameters to be recognized by Express.
 
----
 
 #### 📝 Summary
 
@@ -464,9 +447,6 @@ app.use((err, req, res, next) => {
 
 Middleware functions are essential in Express for **logging, authentication, request parsing, error handling**, and more.
 
----
----
----
 
 ## 🔹What is control flow in Node.js?
 
@@ -491,7 +471,7 @@ fs.readFile('file.txt', 'utf8', (err, data) => {
 console.log('Reading file...'); // Executed first
 ```
 
-> ✅ Output:
+✅ Output:
 ```
 Reading file...
 <file content>
@@ -562,10 +542,6 @@ readFiles();
 | **Promises** | Chain-based async handling, cleaner than callbacks |
 | **Async/Await** | ES2017+ syntax, best for readability and flow |
 | **Control Flow** | Ensures steps run in correct order without blocking |
-
----
----
----
 
 ## 🔹What is `package.json` in NodeJS?
 
@@ -642,9 +618,6 @@ readFiles();
 
 - `npm uninstall express` - Removes `express` from `dependencies`.
 
----
----
----
 #### ❓ What are the most commonly used libraries in NodeJS?
 
 There are the two most commonly used libraries in NodeJs:
@@ -663,12 +636,6 @@ In NodeJS, `require` is used for importing modules, while `import` is used for i
 In Node.js, `dependencies` and `devDependencies` are two sections in the `package.json` file that specify the packages your project needs.
 - **`dependencies`** : These are the packages that your application needs to run in production. They are essential for the application to function correctly.
 - **`devDependencies`** : These are the packages that are only needed during development, such as testing frameworks, build tools, and linters. They are not required for the application to run in production.
-
----
----
----
-
-
 
 
 ## 🔹 How do you handle errors in NodeJS?
@@ -759,10 +726,6 @@ try {
 }
 ```
 
-
----
----
----
 
 
 ## 🔹What are promises in NodeJS?
@@ -889,9 +852,6 @@ function readFilePromise(path) {
 - **Asynchronous Control Flow** : Promises allow you to manage asynchronous operations more effectively.
 
 
----
----
----
 
 ## 🔹What is event-driven programming in NodeJS?
 
@@ -972,9 +932,6 @@ server.listen(3000, () => {
 });
 ```
 
----
----
----
 
 ## 🔹What are the different types of HTTP requests?
 
@@ -1127,9 +1084,6 @@ http.createServer((req, res) => {
   console.log('Server running on port 3000');
 });
 ```
----
----
----
 
 ## 🔹What is a buffer in NodeJS?
 A buffer is a temporary storage area in memory used to hold data while it is being transferred between two locations. In Node.js, buffers are used to handle binary data streams, such as file I/O or network communication. Buffers allow you to work with raw binary data directly, without having to convert it to a string or other data type.
@@ -1189,9 +1143,6 @@ fs.readFile('example.txt', (err, data) => {
 ```
 > N:B: Here, `data` is a `Buffer` containing the file's binary content.
 
----
----
----
 
 
 ## 🔹What are streams in NodeJS?
@@ -1271,17 +1222,12 @@ readableStream.pipe(transformStream).pipe(process.stdout);
 ```
 
 #### 🎯 Benefits of Streams :
+
 - Efficient for large or continuous data
-
 - Reduces memory usage
-
 - Enables real-time data processing
-
 - Ideal for I/O-bound applications
 
----
----
----
 
 ## 🔹What is the passport module in NodeJS?
 
@@ -1397,9 +1343,6 @@ You can easily add other strategies :
 
 Each strategy follows the same pattern : `passport.use(new Strategy(...))`.
 
----
----
----
 
 ## 🔹What is callback hell?
 
@@ -1430,11 +1373,8 @@ doSomething(function (err, result1) {
 This nesting keeps growing with each async operation, making the code:
 
 - Hard to follow
-
 - Difficult to debug
-
 - Error-prone
-
 - Unscalable
 
 
@@ -1485,10 +1425,6 @@ step1(input, function (err, result1) {
   });
 });
 ```
-
----
----
----
 
 ## 🔹What are timers module in NodeJS?
 
@@ -1574,9 +1510,6 @@ Executed every 1 second
 | `setImmediate(fn)`    | Executes a function immediately after I/O events                  |
 | `process.nextTick(fn)`| Executes a function before the next event loop iteration begins   |
 
----
----
----
 
 
 ## 🔹What is the difference between `fs.readFile` and `fs.readFileSync` in NodeJS?
@@ -1680,9 +1613,6 @@ app.listen(3000, () => {
   console.log('Server running on port 3000');
 });
 ```
----
----
----
 
 ## 🔹What is `CORS` in NodeJS?
 
@@ -1772,9 +1702,7 @@ app.use(cors({
 | `Access-Control-Expose-Headers` | Specifies which headers can be exposed to the browser. |
 | `Access-Control-Max-Age` | Specifies how long the results of a preflight request can be cached. |
 
----
----
----
+
 
 ## 🔹What is the purpose of NODE_ENV?
 
