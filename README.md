@@ -2615,6 +2615,11 @@ cd my-app
 express --view=ejs myapp
 ```
 
+**Or without view engine:**
+```bash
+express --no-view myapp
+```
+
 
 
 
