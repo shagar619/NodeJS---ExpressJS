@@ -88,7 +88,7 @@ app.listen(3000, () => {
 
 - Microservices and serverless apps
 
-#### ❓Why is NodeJS single-threaded ?
+#### ❓Why is NodeJS single-threaded?
 
 NodeJS is single-threaded because it's based on the asynchronous, non-blocking nature of JavaScript. This design makes it simpler to develop and maintain, and it allows NodeJS to handle many concurrent requests efficiently.
 
@@ -112,13 +112,15 @@ Here are some reasons why NodeJS is preferred:
 - **Cross-Platform**: NodeJS can run on multiple platforms, including Windows, macOS, and Linux.
 - **Easy Deployment**: NodeJS is easy to deploy and maintain, making it a popular choice for web development.
 
----
----
----
-
 ## 🔹What is NPM?
 
 NPM is a package manager for Node.js that allows developers to easily install, manage, and share packages of code. It is a free and open-source package management system that is used to install and manage packages for Node.js projects.
+
+Key components of NPM:
+
+1. **npm CLI** — The command-line tool that comes with Node.js.
+2. **npm Registry** — The online database of open-source JavaScript packages (https://www.npmjs.com/).
+3. **package.json** — The config file in your project that lists all dependencies and scripts.
 
 #### 🔑 Key Concepts
 
