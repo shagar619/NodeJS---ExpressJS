@@ -2238,6 +2238,181 @@ const stripe = new Stripe(stripeSecretKey);
 - Never share `.env` publicly or in repositories.
 
 
+
+## 🔹What are JWT?
+
+**JWT (JSON Web Token)** is a compact, URL-safe token format used to securely transmit information between two parties (usually client ↔ server).
+It is:
+
+- Signed (using a secret or private key) so the receiver knows it hasn’t been tampered with.
+- Stateless (no session storage on the server needed).
+- Commonly used for authentication.
+
+
+**How JWT Works in Authentication:**
+
+- User logs in → sends credentials to /login.
+- Server verifies credentials and generates a JWT with a payload (user id, role, etc.).
+- Client stores the token (usually in localStorage or an HTTP-only cookie).
+- Client sends token in Authorization header for protected routes.
+- Server verifies the token before granting access.
+
+
+#### Professional Setup in Express.js
+
+**Install Dependencies:**
+```bash
+npm install express jsonwebtoken bcryptjs dotenv
+```
+
+**Create .env File:**
+```bash
+PORT=5000
+JWT_SECRET=myultrasecretkey
+JWT_EXPIRES_IN=1h
+```
+
+**config/env.js:**
+```javascript
+require('dotenv').config();
+
+module.exports = {
+  port: process.env.PORT || 3000,
+  jwt: {
+    secret: process.env.JWT_SECRET,
+    expiresIn: process.env.JWT_EXPIRES_IN || '1h'
+  }
+};
+```
+
+**User Model (Mock for Example):**
+In a real-world setup, this would be in `/models/User.js` and connected to MongoDB.
+```javascript
+// models/User.js
+const users = [
+  { id: 1, username: 'john', password: '$2a$10$uR5lZtBLyaOWeFnEou...' } // hashed
+];
+
+module.exports = users;
+```
+
+**Auth Controller:**
+```javascript
+// controllers/authController.js
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const users = require('../models/User');
+const { jwt: jwtConfig } = require('../config/env');
+
+exports.login = async (req, res) => {
+  const { username, password } = req.body;
+
+  // Find user
+  const user = users.find(u => u.username === username);
+  if (!user) return res.status(401).json({ message: 'Invalid credentials' });
+
+  // Check password
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) return res.status(401).json({ message: 'Invalid credentials' });
+
+  // Generate token
+  const token = jwt.sign({ id: user.id, username: user.username }, jwtConfig.secret, {
+    expiresIn: jwtConfig.expiresIn
+  });
+
+  res.json({ token });
+};
+```
+
+
+**Auth Middleware:**
+```javascript
+// middleware/authMiddleware.js
+const jwt = require('jsonwebtoken');
+const { jwt: jwtConfig } = require('../config/env');
+
+module.exports = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader || !authHeader.startsWith('Bearer '))
+    return res.status(401).json({ message: 'No token provided' });
+
+  const token = authHeader.split(' ')[1];
+
+  try {
+    const decoded = jwt.verify(token, jwtConfig.secret);
+    req.user = decoded; // store payload in request object
+    next();
+  } catch (err) {
+    return res.status(401).json({ message: 'Token is invalid or expired' });
+  }
+};
+```
+
+
+**Routes:**
+```javascript
+// routes/authRoutes.js
+const express = require('express');
+const router = express.Router();
+const authController = require('../controllers/authController');
+const authMiddleware = require('../middleware/authMiddleware');
+
+router.post('/login', authController.login);
+
+// Protected route example
+router.get('/profile', authMiddleware, (req, res) => {
+  res.json({ message: `Welcome ${req.user.username}`, user: req.user });
+});
+
+module.exports = router;
+```
+
+**app.js:**
+```javascript
+const express = require('express');
+const { port } = require('./config/env');
+const authRoutes = require('./routes/authRoutes');
+
+const app = express();
+app.use(express.json());
+
+app.use('/api/auth', authRoutes);
+
+app.listen(port, () => console.log(`Server running on port ${port}`));
+```
+
+
+#### Test
+
+**Login Request:**
+```http
+POST /api/auth/login
+Content-Type: application/json
+
+{
+  "username": "john",
+  "password": "password123"
+}
+```
+
+**Response:**
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG5kIn0.7xYQ5gQm0tZ05p793p75L2648Y70v98Qf454443133"
+}
+```
+
+**Access Protected Route:**
+```http
+GET /api/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG5kIn0.7xYQ5gQm0tZ05p793p75L2648Y70v98Qf454443133
+```
+
+
+
+
+
 #### ❓ What is the purpose of the `app.listen` method in ExpressJS?
 
 The `app.listen` method is used to bind and listen for connections on a specified port.
