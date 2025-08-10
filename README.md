@@ -2413,6 +2413,23 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Impva
 
 
 
+## 🔹What is Bcrypt used for?
+Bcrypt is a popular library for password hashing in Node.js. It is designed to securely store passwords by converting them into a fixed-length string of characters, called a hash. Bcrypt uses a complex algorithm that makes it difficult to reverse engineer the original password from the hash. This ensures that even if a password is compromised, it cannot be easily retrieved.
+
+
+**How It Works:**
+
+1. Salt Generation
+   - A salt is a random string unique to each password.
+
+2. Hashing
+   - The password + salt are hashed multiple times using a computationally expensive algorithm.
+
+3. Verification
+   - When logging in, bcrypt hashes the provided password with the same salt and compares the result to the stored hash.
+
+
+
 #### ❓ What is the purpose of the `app.listen` method in ExpressJS?
 
 The `app.listen` method is used to bind and listen for connections on a specified port.
