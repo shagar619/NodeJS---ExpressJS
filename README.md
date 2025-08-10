@@ -2543,6 +2543,51 @@ console.log('Hello');
 ```
 
 
+## 🔹Differentiate between `res.send()` and `res.json()`.
+
+In Express.js, both res.send() and res.json() are used to send responses to the client, but they have some key differences in how they handle the data.
+
+1. `res.send()`
+
+- Sends a response of any type — string, Buffer, object, or array.
+- Automatically sets the Content-Type based on the data type.
+- If you pass an object or array, Express will internally call `JSON.stringify()` before sending, but it does not explicitly set the content type to JSON unless it's recognized.
+
+**Example**:
+```javascript
+app.get('/send', (req, res) => {
+  res.send({ message: 'Hello World' }); // Will send JSON but content-type detection is automatic
+});
+```
+
+2. `res.json()`
+
+- Sends a response in JSON format.
+- Automatically sets the Content-Type to `application/json`.
+- Does not automatically convert objects to JSON. You need to explicitly call `JSON.stringify()` if you want to send an object or array.
+
+**Example**:
+```javascript
+app.get('/json', (req, res) => {
+  res.json({ message: 'Hello World' }); // Will send JSON with content-type set to application/json
+});
+```
+
+**Professional Recommendation:**
+- Use `res.json()` for API responses returning JSON — it’s explicit and consistent.
+- Use `res.send()` for HTML, plain text, or when sending non-JSON responses.
+
+Key Differences Table:
+
+| Feature | `res.send()` | `res.json()` |
+|---------|------------|------------|
+| Purpose | Send any type of response (string, buffer, object) | Send JSON response |
+| Content-Type | Automatically set based on data type | Set to `application/json` |
+| JSON Conversion | If object/array is passed, converts to JSON automatically | Always converts object/array to JSON |
+| Explicitness | Less explicit (depends on data type) | Explicitly for JSON APIs |
+
+
+
 
 
 
