@@ -2430,6 +2430,53 @@ Bcrypt is a popular library for password hashing in Node.js. It is designed to s
 
 
 
+Example in Express.js:
+
+**Installation:**
+```bash
+npm install bcryptjs
+```
+
+**Hashing a Password:**
+```javascript
+const bcrypt = require('bcryptjs');
+
+async function hashPassword(plainPassword) {
+  const salt = await bcrypt.genSalt(10); // 10 rounds
+  const hashedPassword = await bcrypt.hash(plainPassword, salt);
+  return hashedPassword;
+}
+
+hashPassword('mypassword123').then(hash => {
+  console.log('Hashed password:', hash);
+});
+```
+
+**Verifying a Password:**
+```javascript
+async function verifyPassword(plainPassword, hashedPassword) {
+  const isMatch = await bcrypt.compare(plainPassword, hashedPassword);
+  return isMatch;
+}
+
+const storedHash = '$2a$10$abc123...'; // Retrieved from DB
+verifyPassword('mypassword123', storedHash).then(match => {
+  console.log('Password match:', match); // true or false
+});
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
 #### ❓ What is the purpose of the `app.listen` method in ExpressJS?
 
 The `app.listen` method is used to bind and listen for connections on a specified port.
