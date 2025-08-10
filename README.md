@@ -2466,6 +2466,16 @@ verifyPassword('mypassword123', storedHash).then(match => {
 ```
 
 
+## 🔹What is ESLint?
+
+ESLint is a static code analysis tool for JavaScript (and TypeScript) that helps you find and fix problems in your code before they cause bugs or break style guidelines.
+
+Think of it as your code quality assistant — it doesn’t run your code, but it scans it for:
+
+- Syntax errors
+- Potential bugs (e.g., unused variables, unreachable code)
+- Code style issues (e.g., indentation, quotes, semicolons)
+- Best practice violations (e.g., unsafe type checks, improper equality checks)
 
 
 
@@ -2473,7 +2483,15 @@ verifyPassword('mypassword123', storedHash).then(match => {
 
 
 
+#### ❓Why should you separate the Express app and server?
 
+In ExpressJS, it is recommended to separate the Express App and the server setup. This provides the modularity and flexibility and makes the codebase more easier to maintain and test. Here are some reasons why you should separate the Express app and server:
+
+- **Modularity**: You can define routes, middleware, and other components in the Express app independently of the server configuration.
+- **Ease of Testing**: Separation makes it easier to write unit tests for the Express app without starting an actual server. You can test routes, middleware, and other components in isolation.
+- **Reusability**: You can reuse the same Express app in different server configurations.
+- **Configuration Management**: Separating the app and server allows for cleaner configuration management.
+- **Scalability**: It provides a foundation for a scalable code structure. As your application grows, it will easier to maintain the code.
 
 
 
