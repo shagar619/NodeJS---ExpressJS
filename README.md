@@ -2641,8 +2641,20 @@ myapp/
 │   ├── error.ejs
 │   ├── index.ejs
 │   └── layout.ejs
-
+└── package.json
 ```
+
+**How It Helps:**
+
+Without scaffolding, you’d manually:
+
+- Create app.js and set up Express.
+- Create routes, views, and public folders.
+- Configure middleware.
+- Write boilerplate code for error handling and server startup.
+
+> With scaffolding, all of this is ready in seconds, and you can jump straight into developing your features.
+
 
 
 
