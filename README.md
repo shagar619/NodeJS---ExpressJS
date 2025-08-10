@@ -1994,6 +1994,149 @@ exports.getUsers = async (req, res) => {
 };
 ```
 
+4. **Models**
+
+- Folder: `/models`
+
+  - Defines database schemas and handles database interactions.
+  - With MongoDB & Mongoose:
+
+```javascript
+const mongoose = require('mongoose');
+
+const userSchema = new mongoose.Schema({
+  name: String,
+  email: String
+});
+
+module.exports = mongoose.model('User', userSchema);
+```
+
+5. **Services** (Optional but recommended)
+
+- Folder: `/services`
+
+  - Contains business logic, separate from controllers.
+  - Makes it easier to test and reuse logic.
+
+Example:
+```javascript
+const User = require('../models/User');
+
+exports.getAll = () => {
+  return User.find();
+};
+```
+
+6. **Middleware**
+
+- Folder: `/middleware`
+
+  - Functions that run between request and response.
+  - Examples: authentication, logging, error handling.
+
+Example:
+```javascript
+module.exports = (req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
+};
+```
+
+7. **Config**
+
+- Folder: `/config`
+
+  - Stores environment-specific configuration (e.g., database URLs, API keys).
+  - Often works with `dotenv`:
+
+Example:
+```ini
+PORT=3000
+DB_URI=mongodb://localhost/mydb
+```
+```javascript
+require('dotenv').config();
+module.exports = {
+  port: process.env.PORT,
+  dbURI: process.env.DB_URI
+};
+```
+
+8. **Utils/Helpers**
+
+- Folder: `/utils` or `/helpers`
+
+  - Utility functions shared across the app (formatting dates, generating tokens, etc.).
+
+
+9. **Public & Views** (if rendering HTML)
+
+- `/public` – static assets like images, CSS, JavaScript.
+
+- `/views` – templates if using a view engine (EJS, Pug, Handlebars).
+
+10. **Error Handling**
+
+- Usually centralized in a middleware function:
+
+```javascript
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+```
+
+#### ✅ Typical Project Structure
+
+```bash
+my-express-app/
+│
+├── app.js                  # Main application entry
+├── server.js               # Starts the server
+├── package.json
+├── .gitignore
+├── README.md
+├── .env                     # Environment variables
+│
+├── config/                  # Configuration files
+│   ├── env.js
+│   └── database.js
+│
+├── public/                  # Static files
+│   ├── css/
+│   ├── js/
+│   └── images/
+│
+├── routes/                  # All route definitions
+│   ├── index.js
+│   ├── userRoutes.js
+│   └── postRoutes.js
+│
+├── controllers/             # Controllers for route handling
+│   ├── userController.js
+│   └── postController.js
+│
+├── models/                  # Database models
+│   ├── User.js
+│   └── Post.js
+│
+├── services/                # Business logic layer
+│   ├── userService.js
+│   └── postService.js
+│
+├── middleware/              # Custom middleware
+│   ├── authMiddleware.js
+│   └── errorHandler.js
+│
+├── utils/                   # Helper functions
+│   └── helpers.js
+│
+└── views/                   # Templates
+    ├── index.ejs
+    ├── users.ejs
+    └── posts.ejs
+```
 
 
 
