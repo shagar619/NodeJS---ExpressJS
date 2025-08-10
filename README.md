@@ -1,7 +1,7 @@
 <!-- markdownlint-disable MD012 MD026 MD001 MD022 MD032 MD029 MD019 MD034 MD031 MD047 MD040 MD009 MD058 MD024  -->
 
 
-# Questions About Node JS
+#  Node JS & Express JS
 
 #### 🔹 What is Node.js?
 Node.js is a JavaScript runtime environment that allows developers to run JavaScript code outside of a browser. It is built on top of the V8 JavaScript engine, which is used by Google Chrome and other web browsers. Node.js is used for building server-side applications, APIs, and real-time web applications.
@@ -340,7 +340,7 @@ import { add } from './math.mjs';
 console.log(add(1, 2));
 ```
 
-### 📌 Module Summary
+#### 📌 Module Summary
 
 | Type | Syntax | Example |
 |------|--------|---------|
@@ -880,7 +880,7 @@ function readFilePromise(path) {
 | `Promise.allSettled()`  | Waits for all Promises to settle and returns all results      |
 | `Promise.any()`         | Resolves when any Promise is fulfilled (ignores rejections)   |
 
-### 🛠 Why Use Promises?
+#### 🛠 Why Use Promises?
 - **Avoid Callback Hell** : Promises help flatten the nested structure of callbacks, making code more readable.
 - **Chaining** : You can chain multiple `.then()` calls for sequential operations.
 - **Error Handling** : Promises provide a cleaner way to handle errors using `.catch()`.
@@ -1612,9 +1612,6 @@ console.log('File content:', data);
 - **Use `fs.readFile`** when you want to perform non-blocking I/O operations, especially in a server environment where you want to handle multiple requests concurrently without blocking the event loop.
 - **Use `fs.readFileSync`** when you need to read a file synchronously, such as during the startup of a script or when you are sure that the file is small and won't block the event loop for too long.
 
----
----
----
 
 ## 🔹What is a `.body-parser` in NodeJS?
 
@@ -1843,10 +1840,6 @@ require('dotenv').config();
 console.log(process.env.NODE_ENV); // 'production'
 ```
 
----
----
----
-
 
 #### 🔹What is a cluster in NodeJS?
 
@@ -1963,6 +1956,4 @@ Handled by worker 12348
 Handled by worker 12349
 ```
 
----
----
----
+
