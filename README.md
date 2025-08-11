@@ -2656,8 +2656,27 @@ Without scaffolding, you’d manually:
 > With scaffolding, all of this is ready in seconds, and you can jump straight into developing your features.
 
 
+## 🔹What is `CORS` in ExpressJS?
+
+`CORS` in Express.js refers to Cross-Origin Resource Sharing, a browser security mechanism that controls which origins are allowed to access resources on your server.
+
+If your Express API and frontend are hosted on different domains (or ports), the browser will block requests unless the server explicitly allows them via `CORS` headers.
 
 
+**Why CORS Exists:**
+
+- Browsers use the Same-Origin Policy → a webpage can only request resources from the same domain, protocol, and port by default.
+- CORS is a controlled relaxation of this policy.
+- Without CORS, requests from `https://myfrontend`.com to `https://myapi.com` would be blocked.
+
+
+**How CORS Works:**
+
+When the browser makes a cross-origin request:
+
+1. Simple requests (like `GET` without special headers) → Browser directly sends the request and checks server response for the `Access-Control-Allow-Origin` header.
+
+2. Non-simple requests (like `POST` with JSON body or custom headers) → Browser sends a preflight request (`OPTIONS` method) to check allowed origins, methods, and headers before making the actual request.
 
 
 
