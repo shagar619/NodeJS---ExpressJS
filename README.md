@@ -2862,6 +2862,42 @@ app.listen(3000, () => console.log('Server running on port 3000'));
 
 
 
+## 🔹What is the use of `Response.cookie()` function?
+
+In Express.js, the `response.cookie()` (or `res.cookie()`) function is used to set cookies in the HTTP response that will be stored in the client’s browser.
+
+Cookies are small pieces of data that a server sends to the client, which the client sends back with every subsequent request to the same server — useful for sessions, authentication, user preferences, tracking, etc.
+
+
+**Syntax**:
+```js
+res.cookie(name, value, [options]);
+```
+
+**Parameters:**
+
+- `name` → The name of the cookie.
+- `value` → The value of the cookie (string or object).
+- `options` (optional) → An object to configure the cookie.
+
+Example:
+```js
+app.get('/set-cookie', (req, res) => {
+  res.cookie('username', 'john_doe', { maxAge: 900000, httpOnly: true });
+  res.send('Cookie has been set!');
+});
+```
+
+- `username` → cookie name
+- `john_doe` → cookie value
+- `maxAge: 900000` → expires in 15 minutes
+- `httpOnly: true` → not accessible via JavaScript (more secure)
+
+
+**Reading Cookies:**
+
+To read cookies in Express, you need the `cookie-parser` middleware:
+
 
 
 #### ❓Why should you separate the Express app and server?
