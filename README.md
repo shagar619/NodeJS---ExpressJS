@@ -2678,6 +2678,102 @@ When the browser makes a cross-origin request:
 
 2. Non-simple requests (like `POST` with JSON body or custom headers) → Browser sends a preflight request (`OPTIONS` method) to check allowed origins, methods, and headers before making the actual request.
 
+**Important CORS Headers:**
+
+- `Access-Control-Allow-Origin`: Specifies the origin or origins from which the request is allowed to be sent. Set to `*` to allow all origins.
+- `Access-Control-Allow-Methods`: Specifies the HTTP methods (`GET, POST, PUT, DELETE, PATCH`) allowed in the request.
+- `Access-Control-Allow-Headers`: Specifies the headers allowed in the request.
+- `Access-Control-Allow-Credentials`: Indicates whether the request can include credentials (like cookies).
+- `Access-Control-Max-Age`: Specifies the maximum age in seconds for preflight responses.
+
+
+**Setting Up `CORS` in Express:**
+
+Install the `cors` middleware:
+```bash
+npm install cors
+```
+
+Basic Setup (allow all origins):
+```js
+const express = require('express');
+const cors = require('cors');
+const app = express();
+
+app.use(cors());
+
+app.get('/data', (req, res) => {
+  res.json({ message: 'CORS is enabled for all origins!' });
+});
+
+app.listen(3000);
+```
+
+Professional Setup (restrict specific origins & methods):
+```js
+const corsOptions = {
+  origin: 'https://myfrontend.com', // only allow this origin
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true // allow cookies & authentication
+};
+
+app.use(cors(corsOptions));
+```
+
+Handling Preflight Requests Manually:
+```js
+app.options('*', cors(corsOptions)); // handle all OPTIONS requests
+```
+
+**Example Flow:**
+
+Frontend (React):
+```jsx
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useEffect } from 'react';
+import { useQuery } from 'react-query';
+const fetchData = async () => {
+  const { data } = await axios.get('http://localhost:3000/data');
+  console.log(data);
+};
+const App = () => {
+  const [data, setData] = useState(null);
+  useEffect(() => {
+    fetchData();
+  }, []);
+  return (
+    <div>
+      {data && <p>{data.message}</p>}
+    </div>
+  );
+};
+export default App;
+```
+
+Express App:
+```js
+const express = require('express');
+const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use('/data', require('./routes/data'));
+const port = 3000;
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
+```
+
+→ Response will include:
+```json
+{
+  "message": "Hello, World!"
+}
+```
+
+
+
 
 
 
