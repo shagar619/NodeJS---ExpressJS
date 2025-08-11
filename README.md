@@ -2897,6 +2897,20 @@ app.get('/set-cookie', (req, res) => {
 **Reading Cookies:**
 
 To read cookies in Express, you need the `cookie-parser` middleware:
+```bash
+npm install cookie-parser
+```
+
+```js
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
+app.get('/read-cookie', (req, res) => {
+  res.send(req.cookies);
+});
+```
+
+
 
 
 
