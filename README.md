@@ -2772,6 +2772,93 @@ app.listen(port, () => {
 }
 ```
 
+## 🔹 How would you render plain HTML using ExpressJS?
+
+**Send Inline HTML Directly:**
+
+If the HTML is small, you can send it directly as a string using `res.send()`:
+```js
+const express = require('express');
+const app = express();
+
+app.get('/', (req, res) => {
+  res.send(`
+    <html>
+      <head><title>My Page</title></head>
+      <body>
+        <h1>Hello, Express!</h1>
+        <p>This is plain HTML.</p>
+      </body>
+    </html>
+  `);
+});
+
+app.listen(3000, () => console.log('Server running on port 3000'));
+```
+
+✅ Best for quick testing or tiny HTML pages.
+❌ Not practical for large pages.
+
+**Serve Static HTML Files:**
+
+If you have an existing `.html` file, use `res.sendFile()`:
+```js
+const express = require('express');
+const app = express();
+const path = require('path');
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+app.listen(3000, () => console.log('Server running on port 3000'));
+```
+✅ Best for serving static HTML pages.
+❌ Not practical for dynamic content.
+
+And place your `index.html` in `/public`:
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Page</title>
+</head>
+<body>
+  <h1>Hello, Express!</h1>
+  <p>This is a static HTML page.</p>
+</body>
+</html>
+```
+
+**Use Express Static Middleware:**
+
+For multiple static HTML pages, set up a static directory:
+```js
+app.use(express.static('public'));
+```
+
+Now any `.html` in `public/` is served automatically:
+
+```arduino
+public/
+  index.html  → http://localhost:3000/
+  about.html  → http://localhost:3000/about.html
+```
+
+**Render HTML via a View Engine:**
+
+Although view engines are often used for templates (`.ejs`, `.pug`), you can configure Express to use plain HTML as views:
+```js
+const express = require('express');
+const app = express();
+app.set('view engine', 'html');
+app.get('/', (req, res) => {
+  res.render('index');
+});
+app.listen(3000, () => console.log('Server running on port 3000'));
+```
+
+✅ Best for HTML that might later need dynamic data.
 
 
 
