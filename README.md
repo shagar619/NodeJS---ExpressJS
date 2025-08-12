@@ -3005,7 +3005,10 @@ When ` / ` is visited, Pug compiles the above into:
 ```
 
 
+## 🔹How to generating a skeleton ExpressJS app using terminal command?
 
+To generate a skeleton Express.js app from the terminal, you use the official `express-generator` package.
+It’s like hitting “New Project” and instantly getting all the boilerplate ready.
 
 
 
