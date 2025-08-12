@@ -2910,7 +2910,23 @@ app.get('/read-cookie', (req, res) => {
 });
 ```
 
+**JWT in Cookies:**
 
+Storing JWT in a secure HTTP-only cookie:
+```js
+app.post('/login', (req, res) => {
+  const token = generateJwtForUser(req.body.user);
+  res.cookie('token', token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+    maxAge: 3600000 // 1 hour
+  });
+  res.json({ message: 'Logged in successfully' });
+});
+```
+
+✅ This keeps the token safe from JavaScript-based attacks (like XSS).
 
 
 
