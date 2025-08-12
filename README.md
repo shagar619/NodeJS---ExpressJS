@@ -2930,6 +2930,88 @@ app.post('/login', (req, res) => {
 
 
 
+
+## 🔹What is Pug template engine in ExpressJS?
+
+Pug (formerly called Jade) is a template engine for Node.js and Express.js that lets you write HTML pages using a clean, indentation-based syntax instead of plain HTML.
+
+It’s often used with Express.js to render dynamic content — meaning you can insert server-side variables, loop through data, and apply conditional logic inside HTML templates.
+
+
+**Use for:**
+
+- `Cleaner syntax` → No closing tags, less repetitive HTML.
+- `Dynamic content` → Pass variables from Express routes to your views.
+- `Template inheritance` → Reuse layouts and partials (headers, footers).
+- `Integration with Express` → Built-in support for rendering Pug views.
+
+
+**Setting Up Pug in Express:**
+
+**Install Pug:**
+```bash
+npm install pug
+```
+
+**Configure Express:**
+```js
+const express = require('express');
+const path = require('path');
+
+const app = express();
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
+
+app.get('/', (req, res) => {
+  res.render('index', { title: 'My Pug Page', message: 'Hello from Pug!' });
+});
+
+app.listen(3000, () => console.log('Server running on port 3000'));
+```
+
+**Example Pug Template (`views/index.pug`):**
+```pug
+doctype html
+html
+  head
+    title= title
+  body
+    h1= message
+    p This is a paragraph rendered with Pug.
+    ul
+      each item in ['Apple', 'Banana', 'Cherry']
+        li= item
+```
+
+**Output HTML:**
+
+When ` / ` is visited, Pug compiles the above into:
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Pug Page</title>
+  </head>
+  <body>
+    <h1>Hello from Pug!</h1>
+    <p>This is a paragraph rendered with Pug.</p>
+    <ul>
+      <li>Apple</li>
+      <li>Banana</li>
+      <li>Cherry</li>
+    </ul>
+  </body>
+</html>
+```
+
+
+
+
+
+
+
+
+
 #### ❓Why should you separate the Express app and server?
 
 In ExpressJS, it is recommended to separate the Express App and the server setup. This provides the modularity and flexibility and makes the codebase more easier to maintain and test. Here are some reasons why you should separate the Express app and server:
