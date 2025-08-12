@@ -3010,6 +3010,72 @@ When ` / ` is visited, Pug compiles the above into:
 To generate a skeleton Express.js app from the terminal, you use the official `express-generator` package.
 It’s like hitting “New Project” and instantly getting all the boilerplate ready.
 
+**Install Express Generator Globally:**
+```bash
+npm install -g express-generator
+```
+
+> This makes the express command available anywhere in your terminal.
+
+**Generate a New Express App:**
+```bash
+express myapp
+```
+
+- `myapp` → the folder name for your project.
+- This command creates the full directory structure and starter files.
+
+**Add View Engine (Optional):**
+
+If you want a template engine (like EJS, Pug, or Handlebars):
+```bash
+express --view=ejs myapp
+express --view=pug myapp
+express --view=hbs myapp
+```
+
+Or no views at all (API-only app):
+```bash
+express --no-view myapp
+```
+
+**Go Inside and Install Dependencies:**
+```bash
+cd myapp
+npm install
+```
+
+**Start the App:**
+```bash
+npm start
+```
+
+**Default Project Structure:**
+
+When you run `express --view=ejs myapp`, you’ll get:
+```pgsql
+myapp/
+├── app.js
+├── bin/
+│   └── www
+├── package.json
+├── public/
+│   ├── images/
+│   ├── javascripts/
+│   └── stylesheets/
+│       └── style.css
+├── routes/
+│   ├── index.js
+│   └── users.js
+├── views/
+│   ├── error.ejs
+│   ├── index.ejs
+│   └── layout.ejs
+└── yarn.lock
+```
+
+
+
 
 
 
