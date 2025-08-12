@@ -3140,7 +3140,7 @@ app.use(express.static('public'));
 ```
 
 
-4. Third-Party Middleware:**
+**4. Third-Party Middleware:**
 
 - Installed via npm to add extra features.
 - Examples:
@@ -3158,6 +3158,49 @@ const morgan = require('morgan');
 app.use(cors({ origin: 'https://myfrontend.com' }));
 app.use(morgan('dev'));
 ```
+
+
+**5. Error-Handling Middleware:**
+
+- Special middleware with four parameters: (`err, req, res, next`).
+- Captures errors and sends appropriate responses.
+- Must be declared after all other middleware and routes.
+
+Example – Centralized error handler:
+```javascript
+const express = require('express');
+const app = express();
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+```
+
+**6. Custom Middleware:**
+
+- Custom middleware functions that can handle specific tasks.
+- Can be used to add functionality to the Express app.
+
+Example – Custom middleware to log requests:
+```javascript
+const express = require('express');
+const app = express();
+function logger(req, res, next) {
+  console.log(`${req.method} ${req.url}`);
+  next();
+}
+app.use(logger);
+```
+
+**Professional Middleware Flow Diagram:**
+
+```css
+Request → [Built-In Middleware] → [Third-Party Middleware] → [App-Level Middleware]
+        → [Router-Level Middleware] → [Route Handler] → [Error Handler] → Response
+```
+
+
+
 
 
 
