@@ -3202,6 +3202,144 @@ Request → [Built-In Middleware] → [Third-Party Middleware] → [App-Level Mi
 
 
 
+## 🔹What are the different types of HTTP requests?
+
+In HTTP (Hypertext Transfer Protocol), different request methods (often called HTTP verbs) define the action the client wants the server to perform on a resource.
+
+In Express.js and APIs in general, the most commonly used HTTP request types are:
+
+
+**1. GET:**
+
+- **Purpose**: Retrieve data from the server.
+- **Characteristics**:
+
+  - Data is sent in the URL query string (e.g., /users?id=5).
+  - Should not change server state (safe & idempotent).
+  - Can be cached and bookmarked.
+
+Example in Express:
+```javascript
+app.get('/users', (req, res) => {
+  // Retrieve user data from the database
+  res.send(users);
+});
+```
+
+**2. POST:**
+
+- **Purpose**: Send data to the server to create or update a resource.
+- **Characteristics**:
+  - Data is sent in the request body.
+  - Can change server state (unsafe).
+  - Not typically cached.
+  - Can be bookmarked.
+
+Example in Express:
+```javascript
+app.post('/users', (req, res) => {
+  // Create or update user data in the database
+  res.send({ message: 'User created/updated' });
+});
+```
+
+**3. PUT:**
+
+- **Purpose**: Replace the entire resource with new data.
+- **Characteristics**:
+  - Data is sent in the request body.
+  - Can change server state (unsafe).
+  - Not typically cached.
+  - Can be bookmarked.
+
+Example in Express:
+```javascript
+app.put('/users/:id', (req, res) => {
+  // Replace user data in the database
+  res.send({ message: 'User updated' });
+});
+```
+
+**4. PATCH:**
+
+- **Purpose**: Update a resource partially.
+- **Characteristics**:
+  - Data is sent in the request body.
+  - Can change server state (unsafe).
+  - Not typically cached.
+  - Can be bookmarked.
+
+Example in Express:
+```javascript
+app.patch('/users/:id', (req, res) => {
+  // Update user data in the database
+  res.send({ message: 'User updated' });
+});
+```
+
+**5. DELETE:**
+
+- **Purpose**: Delete a resource.
+- **Characteristics**:
+  - No data is sent in the request body.
+  - Can change server state (unsafe).
+  - Not typically cached.
+  - Can be bookmarked.
+
+Example in Express:
+```javascript
+app.delete('/users/:id', (req, res) => {
+  // Delete user data from the database
+  res.send({ message: 'User deleted' });
+});
+```
+
+**6. HEAD:**
+
+- **Purpose**: Get metadata about a resource.
+- **Characteristics**:
+  - No data is sent in the request body.
+  - Can change server state (unsafe).
+  - Not typically cached.
+  - Can be bookmarked.
+
+Example in Express:
+```javascript
+app.head('/users/:id', (req, res) => {
+  // Send metadata about the user
+  res.send({ message: 'User metadata' });
+});
+```
+
+**7. OPTIONS:**
+
+- **Purpose**: Get allowed HTTP methods for a resource.
+- **Characteristics**:
+  - No data is sent in the request body.
+  - Can change server state (unsafe).
+  - Not typically cached.
+  - Can be bookmarked.
+
+Example in Express:
+```javascript
+app.options('/users/:id', (req, res) => {
+  // Send allowed HTTP methods for the user
+  res.send({ message: 'Allowed methods' });
+});
+```
+
+Quick Professional Summary Table:
+| Method | Description |
+| --- | --- |
+| GET | Request a resource from the server. |
+| POST | Create a new resource on the server. |
+| PUT | Update an existing resource on the server. |
+| PATCH | Partially update an existing resource on the server. |
+| DELETE | Delete a resource from the server. |
+| HEAD | Get metadata about a resource. |
+| OPTIONS | Get allowed HTTP methods for a resource. |
+
+
 
 
 
