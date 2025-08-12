@@ -3340,9 +3340,88 @@ Quick Professional Summary Table:
 | OPTIONS | Get allowed HTTP methods for a resource. |
 
 
+## 🔹Which are the arguments available to an ExpressJS route handler function?
+
+In Express.js, a route handler function (also called a callback or middleware) is called whenever a matching route is hit.
+
+The standard function signature looks like this:
+```javascript
+app.get('/path', (req, res, next) => { ... });
+```
+
+**Standard Route Handler Arguments:**
+
+**(a) `req` – Request Object:**
+- Represents the incoming HTTP request.
+- Contains information about the request, such as headers, query parameters, and body.
+
+  - `req.params` → Route parameters (`/users/:id`)
+  - `req.query` → Query string (`?page=2`)
+  - `req.body` → POST/PUT/PATCH body data
+  - `req.headers` → HTTP headers
+
+Example:
+```javascript
+app.get('/users/:id', (req, res) => {
+  const userId = req.params.id;
+  // Do something with userId
+  res.send(`User with ID ${userId} retrieved.`);
+});
+```
+
+**(b) `res` – Response Object:**
+
+- Used to send a response to the client.
+- Common methods:
+
+  - `res.send()` → Sends plain text, HTML, or objects.
+  - `res.json()` → Sends JSON.
+  - `res.status()` → Sets status code.
+  - `res.render(`) → Renders a template view.
+  - `res.redirect()` → Redirects the client.
+
+Example:
+```javascript
+app.get('/users/:id', (req, res) => {
+  const userId = req.params.id;
+  // Do something with userId
+  res.send(`User with ID ${userId} retrieved.`);
+});
+```
+
+**(c) `next` – Next Function:**
+
+- Used to pass control to the next middleware function in the stack.
+- If you don’t call `next()` in a route handler, the request will be handled by the next route handler in the stack.
+
+Example:
+```javascript
+app.get('/users/:id', (req, res, next) => {
+  const userId = req.params.id;
+  // Do something with userId
+  next();
+});
+```
 
 
+**Error-Handling Middleware Arguments:**
 
+- If a middleware has four parameters, it becomes an error-handling middleware:
+
+```js
+(err, req, res, next)
+```
+
+- `err` → The error object or message.
+- Used for centralizing error handling in production.
+
+Example:
+```javascript
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+```
 
 
 
