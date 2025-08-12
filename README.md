@@ -3075,6 +3075,90 @@ myapp/
 ```
 
 
+## 🔹What are the types of middlewares?
+
+In Express.js, middleware functions are like “interceptors” — they run between a request coming in and the response going out.
+
+There are five main types of middleware encounter in professional Express applications:
+
+
+**1. Application-Level Middleware:**
+
+- Bound to an app instance using `app.use()` or `HTTP` verbs like `app.get()`, `app.post()`.
+- Runs for every request or for specific routes.
+- Good for logging, body parsing, authentication at the app level.
+
+Example – Logging middleware:
+```javascript
+const express = require('express');
+const app = express();
+
+// Logs every request
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url} at ${new Date().toISOString()}`);
+  next();
+});
+
+app.get('/', (req, res) => res.send('Home Page'));
+```
+
+**2. Router-Level Middleware:**
+
+- Bound to a specific router using `router.use()` or `HTTP` verbs like `router.get()`.
+- Runs for every request or for specific routes.
+- Good for logging, body parsing, authentication at the router level.
+
+Example – Middleware for user routes only:
+```javascript
+const express = require('express');
+const router = express.Router();
+
+router.use((req, res, next) => {
+  console.log('User route hit');
+  next();
+});
+
+router.get('/', (req, res) => res.send('User Home'));
+router.get('/profile', (req, res) => res.send('User Profile'));
+
+app.use('/users', router);
+```
+
+**3. Built-In Middleware:**
+
+- Comes with Express out of the box.
+- Common ones include:
+  - `express.json()` → Parses JSON request bodies.
+  - `express.urlencoded()` → Parses URL-encoded data (form submissions).
+  - `express.static()` → Serves static files.
+
+Example – Serving static files:
+```javascript
+const express = require('express');
+const app = express();
+app.use(express.static('public'));
+```
+
+
+4. Third-Party Middleware:**
+
+- Installed via npm to add extra features.
+- Examples:
+  - `morgan` (HTTP request logger)
+  - `cors` (Cross-Origin Resource Sharing)
+  - `cookie`-parser (Parse cookies)
+  - `helmet` (Security headers)
+
+Example – Using CORS and Morgan:
+```javascript
+const express = require('express');
+const app = express();
+const cors = require('cors');
+const morgan = require('morgan');
+app.use(cors({ origin: 'https://myfrontend.com' }));
+app.use(morgan('dev'));
+```
+
 
 
 
