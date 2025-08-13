@@ -3464,6 +3464,80 @@ app.use((err, req, res, next) => {
 ```
 
 
+**2. Pass Errors with `next(err)`:**
+
+Instead of sending the response directly, you can forward errors to the central handler.
+
+Example:
+```javascript
+app.get('/user/:id', (req, res, next) => {
+  const user = null; // Simulating missing user
+  if (!user) {
+    const error = new Error('User not found');
+    error.status = 404;
+    return next(error);
+  }
+  res.json(user);
+});
+```
+
+**3. Handle Async Errors with `try...catch` or Libraries:**
+
+For `async/await` routes, wrap code in `try...catch` and call `next(err)`.
+
+Example:
+```javascript
+app.get('/data', async (req, res, next) => {
+  try {
+    const data = await fetchDataFromDB();
+    res.json(data);
+  } catch (err) {
+    next(err); // Forward to error handler
+  }
+});
+```
+
+> **Pro Tip**: Use libraries like `express-async-errors` to handle async errors without repeating `try...catch`.
+
+
+**4. Validation & User Errors:**
+
+Use libraries like Joi or express-validator to catch user input errors before reaching business logic.
+
+Example:
+```javascript
+const Joi = require('joi');
+const validateUser = (req, res, next) => {
+  const schema = Joi.object({
+    name: Joi.string().required(),
+    age: Joi.number().integer().min(18).max(120).required()
+  });
+  const result = schema.validate(req.body);
+  if (result.error) {
+    const error = new Error('Invalid request body');
+    error.status = 400;
+    return next(error);
+  }
+  next();
+};
+```
+
+**5. Handle 404 Errors:**
+
+If no route matches, send a Not Found error before the error handler.
+
+Example:
+```javascript
+app.use((req, res, next) => {
+  const error = new Error('Route Not Found');
+  error.status = 404;
+  next(error);
+});
+```
+
+
+
+
 
 
 
