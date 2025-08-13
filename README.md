@@ -3697,10 +3697,95 @@ because `/users` is just a prefix.
 
 
 
+## 🔹What dynamic routing is in ExpressJS?
+
+In Express.js, dynamic routing means creating routes that can handle variable parts in the URL — allowing the same route definition to respond to different requests based on parameters in the path.
+
+Instead of hardcoding every possible URL, we define route parameters that act like placeholders.
+
+**How It Works:**
+
+Dynamic routing uses route parameters (denoted by a `:` prefix) in the route path:
+
+```js
+app.get('/users/:id', (req, res) => {
+  res.send(`User ID: ${req.params.id}`);
+});
+```
+
+**Here:**
+
+- `/users/101` → matches → `req.params.id = "101"`
+- `/users/abc` → matches → `req.params.id = "abc"`
 
 
+**Benefits:**
+
+- **Reusable routes**: One definition handles many variations.
+- **Clean URLs**: No need for messy query strings.
+- **Flexible data handling**: Easily access IDs, slugs, or category names.
 
 
+Multiple Parameters Example:
+```js
+app.get('/posts/:year/:month', (req, res) => {
+  const { year, month } = req.params;
+  res.send(`Posts from ${month}/${year}`);
+});
+```
+
+**Request:**
+```js
+http://localhost:3000/posts/2025/08
+```
+
+**Response:**
+```js
+Posts from 08/2025
+```
+
+Mixing Static and Dynamic Segments:
+```js
+app.get('/users/:id/posts/:postId', (req, res) => {
+  const { id, postId } = req.params;
+  res.send(`User ID: ${id}, Post ID: ${postId}`);
+});
+```
+
+**Request:**
+```js
+http://localhost:3000/shop/electronics/item/42
+```
+
+**Response:**
+```js
+Category: electronics, Item ID: 42
+```
+
+**Professional Use Case: Dynamic REST API:**
+```js
+const express = require('express');
+const app = express();
+const port = 3000;
+const { createServer } = require('http');
+const server = createServer(app);
+app.get('/api/users/:userId/orders/:orderId', (req, res) => {
+  const { userId, orderId } = req.params;
+  // Normally you'd query a database here
+  res.json({
+    userId,
+    orderId,
+    status: 'Shipped',
+    date: '2025-08-13'
+  });
+});
+server.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
+```
+
+**✅ In short:**
+> Dynamic routing in Express.js allows you to create flexible, parameterized routes where parts of the URL can change and be accessed via `req.params`, making APIs and web apps more scalable and maintainable.
 
 
 
