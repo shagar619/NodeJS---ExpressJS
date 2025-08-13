@@ -3425,6 +3425,48 @@ app.use((err, req, res, next) => {
 
 
 
+## 🔹How can you deal with error handling in ExpressJS?
+
+In ExpressJS, error handling is a crucial aspect of building robust and scalable web applications. Proper error handling ensures that your application can gracefully handle unexpected situations and provide meaningful feedback to the client. 
+
+Here are some best practices for error handling in ExpressJS:
+
+**1. Use a Centralized Error-Handling Middleware:**
+
+Express has a special middleware form with four arguments:
+```javascript
+app.use((err, req, res, next) => {
+  // Handle errors here
+});
+```
+
+- Placed after all routes and middleware.
+- Captures errors passed via next(err) or thrown in async code.
+
+Example:
+```javascript
+const express = require('express');
+const app = express();
+
+// Routes
+app.get('/', (req, res) => {
+  throw new Error('Something went wrong!');
+});
+
+// Centralized Error Handler
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(err.status || 500).json({
+    success: false,
+    message: err.message || 'Internal Server Error'
+  });
+});
+```
+
+
+
+
+
 #### ❓Why should you separate the Express app and server?
 
 In ExpressJS, it is recommended to separate the Express App and the server setup. This provides the modularity and flexibility and makes the codebase more easier to maintain and test. Here are some reasons why you should separate the Express app and server:
