@@ -227,7 +227,7 @@ axios.get('https://api.github.com')
 }
 ```
 
-####  📁 Files NPM Uses
+**📁 Files NPM Uses**
 
 - `package.json` – Describes your project and its dependencies.
 
@@ -235,7 +235,7 @@ axios.get('https://api.github.com')
 
 - `node_modules/` – Directory containing all installed packages.
 
-#### 🌍 NPM in Practice
+**🌍 NPM in Practice**
 
 NPM enables:
 
@@ -252,7 +252,7 @@ Node.js uses a module system to organize code into reusable modules. A module is
 
 #### 🧱 Types of Modules
 
-#### 1. Built-in Modules
+**1. Built-in Modules**
 
 Node.js includes several modules out-of-the-box. No installation is needed.
 
@@ -270,7 +270,7 @@ const fs = require('fs');
 fs.writeFileSync('hello.txt', 'Hello from Node.js!');
 ```
 
-#### 2. Local Modules
+**2. Local Modules**
 
 These are custom modules created within your project.
 
@@ -286,7 +286,7 @@ const greet = require('./greet');
 console.log(greet('Alice')); // Output: Hello, Alice!
 ```
 
-#### 3. Third-Party Modules
+**3. Third-Party Modules**
 
 These are modules installed from the NPM registry.
 
@@ -366,7 +366,7 @@ We use the `require` module to import the External libraries in NodeJS. The resu
 
 **Middleware** in Node.js is a function that is executed between the **request** (`req`) and **response** (`res`) lifecycle of an HTTP **request** (`req`). It allows you to modify the **request** (`req`) or **response** (`res`) before it reaches the final destination. Middleware can be used for various purposes such as logging, authentication, error handling, and data transformation.
 
-#### 🔁 Middleware Flow
+**🔁 Middleware Flow**
 
 ```text
 Request --> Middleware 1 --> Middleware 2 --> Route Handler --> Response
