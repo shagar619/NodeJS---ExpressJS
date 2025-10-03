@@ -1,7 +1,13 @@
 <!-- markdownlint-disable MD012 MD026 MD001 MD022 MD032 MD029 MD019 MD034 MD031 MD047 MD040 MD009 MD058 MD024 MD025  -->
 
 
-#  Node JS & Express JS
+<div>
+
+ <img src="https://miro.medium.com/v2/0*-hi_YN6201aadrIe.png" style="width:100%; height:auto;">
+
+</div>
+
+## Node JS and Express JS
 
 #### 🔹 What is Node.js?
 Node.js is a JavaScript runtime environment that allows developers to run JavaScript code outside of a browser. It is built on top of the V8 JavaScript engine, which is used by Google Chrome and other web browsers. Node.js is used for building server-side applications, APIs, and real-time web applications.
