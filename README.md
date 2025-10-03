@@ -833,7 +833,7 @@ function readFilePromise(path) {
 }
 ```
 
-#### 🧰 Common Promise Methods – Summary Table
+**🧰 Common Promise Methods – Summary Table**
 
 | Method                  | Description                                                  |
 |--------------------------|--------------------------------------------------------------|
@@ -845,7 +845,8 @@ function readFilePromise(path) {
 | `Promise.allSettled()`  | Waits for all Promises to settle and returns all results      |
 | `Promise.any()`         | Resolves when any Promise is fulfilled (ignores rejections)   |
 
-#### 🛠 Why Use Promises?
+**🛠 Why Use Promises?**
+
 - **Avoid Callback Hell** : Promises help flatten the nested structure of callbacks, making code more readable.
 - **Chaining** : You can chain multiple `.then()` calls for sequential operations.
 - **Error Handling** : Promises provide a cleaner way to handle errors using `.catch()`.
@@ -860,13 +861,17 @@ In event-driven programming, the flow of the program is determined by events —
 Node.js uses an event loop and an event emitter pattern to handle these events efficiently, making it highly scalable and non-blocking.
 
 #### 🚦 Key Concepts
-#### 1. **Events**
+
+**1. Events**
+
 An event is a signal that something has happened (e.g., data received, connection opened, file read).
 
-#### 2. **Listeners**
+**2. Listeners**
+
 Functions that are attached to events and get executed when the event occurs.
 
-#### 📦 Node.js EventEmitter Example
+**📦 Node.js EventEmitter Example**
+
 Node.js provides the `EventEmitter` class from the `events` module :
 
 ```javascript
@@ -884,18 +889,16 @@ emitter.emit('greet', 'Alice');
 // Output: Hello, Alice!
 ```
 
-#### ⚙️ How Node.js Uses Events Internally
+**⚙️ How Node.js Uses Events Internally**
+
 Node.js is built on an event-driven architecture, which is used in:
 
 - HTTP servers (handling requests)
-
 - Streams (reading/writing files or network data)
-
 - Sockets (real-time communication)
-
 - Process events (`exit`, `uncaughtException`, etc.)
 
-#### 🔁 The Event Loop
+**🔁 The Event Loop**
 
 The event loop is the core of Node.js's asynchronous nature. It continuously checks for events and executes their associated listeners.
 ```javascript
@@ -909,16 +912,14 @@ fs.readFile('example.txt', 'utf8', (err, data) => {
 console.log('Reading file...');
 ```
 
-#### ✅ Benefits of Event-Driven Programming in Node.js
+✅ Benefits of Event-Driven Programming in Node.js
+
 - High concurrency with low overhead
-
 - Non-blocking I/O
-
 - Efficient resource usage
-
 - Great for real-time apps (e.g., chat, games)
 
-#### 🧪 Real-World Example: HTTP Server
+🧪 Real-World Example: HTTP Server
 
 ```javascript
 const http = require('http');
@@ -937,7 +938,7 @@ server.listen(3000, () => {
 
 In HTTP (Hypertext Transfer Protocol), different types of requests (also called methods) define what action the client wants the server to perform on a resource.
 
-#### 🌐 Common HTTP Request Methods
+**🌐 Common HTTP Request Methods**
 
 | Method     | Description                                       | Safe | Idempotent |
 |------------|---------------------------------------------------|------|------------|
@@ -950,12 +951,10 @@ In HTTP (Hypertext Transfer Protocol), different types of requests (also called 
 | `OPTIONS`  | Returns allowed HTTP methods for a resource       | ✅   | ✅         |
 
 
-#### 1. **GET**
+**1. GET**
 
 - Retrieves data from the server.
-
 - Should have no side effects (i.e., not change data).
-
 - Used for: reading articles, listing products, loading user data.
 
 ```javascript
@@ -970,7 +969,8 @@ http.createServer((req, res) => {
   console.log('Server running on port 3000');
 });
 ```
-#### 2. **POST**
+**2. POST**
+
 - Submits new data to the server.
 - Can create new resources or trigger actions.
 - Used for: submitting forms, uploading files, creating new records.
@@ -993,7 +993,8 @@ http.createServer((req, res) => {
   console.log('Server running on port 3000');
 });
 ```
-#### 3. **PUT**
+**3. PUT**
+
 - Replaces an entire resource with new data.
 - Idempotent: multiple identical requests have the same effect as a single request.
 - Used for: updating user profiles, replacing documents.
@@ -1015,7 +1016,8 @@ http.createServer((req, res) => {
   console.log('Server running on port 3000');
 });
 ```
-#### 4. **PATCH**
+**4. PATCH**
+
 - Partially updates a resource.
 - Not idempotent: multiple requests may have different effects.
 - Used for: updating specific fields in a user profile, modifying parts of a document.
@@ -1037,7 +1039,7 @@ http.createServer((req, res) => {
   console.log('Server running on port 3000');
 });
 ```
-#### 5. **DELETE**
+**5. DELETE**
 - Removes a resource from the server.
 - Idempotent: multiple identical requests have the same effect as a single request.
 - Used for: deleting user accounts, removing items from a shopping cart.
@@ -1054,7 +1056,8 @@ http.createServer((req, res) => {
   console.log('Server running on port 3000');
 });
 ```
-#### 6. **HEAD**
+**6. HEAD**
+
 - Similar to `GET`, but retrieves only the headers, not the body.
 - Used for checking resource metadata without downloading the content.
 ```javascript
@@ -1069,7 +1072,8 @@ http.createServer((req, res) => {
   console.log('Server running on port 3000');
 });
 ```
-#### 7. **OPTIONS**
+**7. OPTIONS**
+
 - Returns the HTTP methods that the server supports for a specific resource.
 - Used for CORS preflight requests and discovering server capabilities.
 ```javascript
