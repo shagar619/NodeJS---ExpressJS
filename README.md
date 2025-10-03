@@ -372,7 +372,7 @@ We use the `require` module to import the External libraries in NodeJS. The resu
 Request --> Middleware 1 --> Middleware 2 --> Route Handler --> Response
 ```
 
-#### 🧱 Syntax
+**🧱 Syntax**
 
 ```js
 app.use((req, res, next) => {
@@ -381,7 +381,7 @@ app.use((req, res, next) => {
 });
 ```
 
-#### 📂 Types of Middleware
+**📂 Types of Middleware**
 
 | Type | Description |
 |------|-------------|
@@ -392,7 +392,7 @@ app.use((req, res, next) => {
 | Error-handling | Defined with **four** parameters: `(err, req, res, next)` |
 
 
-#### 💡 Example: Application-Level Middleware
+**💡 Example: Application-Level Middleware**
 
 ```js
 const express = require('express');
@@ -413,7 +413,7 @@ app.listen(3000, () => {
 });
 ```
 
-#### 🧰 Example: Third-Party Middleware (`morgan`)
+**🧰 Example: Third-Party Middleware (`morgan`)**
 
 Install `morgan`:
 
@@ -428,7 +428,7 @@ const morgan = require('morgan');
 app.use(morgan('dev')); // Logs HTTP requests
 ```
 
-#### ⚠️ Error-Handling Middleware
+**⚠️ Error-Handling Middleware**
 
 ```js
 app.use((err, req, res, next) => {
@@ -440,7 +440,7 @@ app.use((err, req, res, next) => {
 > ✅ Note: Error-handling middleware **must** have 4 parameters to be recognized by Express.
 
 
-#### 📝 Summary
+**📝 Summary**
 
 | Term | Description |
 |------|-------------|
@@ -456,13 +456,13 @@ Middleware functions are essential in Express for **logging, authentication, req
 
 Control flow in Node.js refers to the order in which code is executed. It involves the flow of execution through different parts of your application, such as functions, asynchronous operations, and event handling. In Node.js, control flow is managed by the event loop, which allows your program to handle multiple tasks concurrently without blocking the execution of other code.
 
-#### 🧠 Why Control Flow Matters
+**🧠 Why Control Flow Matters**
 
 JavaScript does **not wait** for an operation to complete. Instead, it moves on to the next line. That’s why control flow is important — to ensure that steps run in the correct sequence.
 
-#### 📘 Common Asynchronous Patterns
+**📘 Common Asynchronous Patterns**
 
-#### 1. Callbacks
+**1. Callbacks**
 
 ```js
 const fs = require('fs');
