@@ -7,8 +7,6 @@
 
 </div>
 
-## Node JS and Express JS
-
 #### 🔹 What is Node.js?
 Node.js is a JavaScript runtime environment that allows developers to run JavaScript code outside of a browser. It is built on top of the V8 JavaScript engine, which is used by Google Chrome and other web browsers. Node.js is used for building server-side applications, APIs, and real-time web applications.
 
@@ -24,7 +22,7 @@ Node.js is a JavaScript runtime environment that allows developers to run JavaSc
 
 #### 🛠️ Installing Node.js
 
-you can install `Node.js` from the official website : https://nodejs.org/en/download/
+you can install `Node.js` from the official website : https://nodejs.org/en/download
 
 To verify installation :
 
@@ -124,7 +122,7 @@ NPM is a package manager for Node.js that allows developers to easily install, m
 
 #### 🔑 Key Concepts
 
-#### ✅ 1. Package
+**✅ 1. Package**
 
 A package is a collection of reusable code that can be easily shared and used in other projects. It typically includes:
 
@@ -134,11 +132,11 @@ A package is a collection of reusable code that can be easily shared and used in
 
 - Optional documentation, configuration, and tests
 
-#### ✅ 2. Registry
+**✅ 2. Registry**
 
 NPM connects to a central online registry at https://www.npmjs.com that hosts thousands of open-source
 
-#### ✅ 3. Command Line Interface (CLI)
+**✅ 3. Command Line Interface (CLI)**
 
 You interact with NPM through the terminal using commands like `npm install`, `npm init`, `npm update`, etc.
 
@@ -198,7 +196,7 @@ npm install --package-lock
 npm run start
 ```
 
-#### 📦 Example : Installing a Package
+**📦 Example : Installing a Package**
 
 ```bash
 # Install a specific package (e.g., axios)
