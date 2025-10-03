@@ -481,7 +481,7 @@ Reading file...
 <file content>
 ```
 
-#### 2. Callback Hell (Pyramid of Doom)
+**2. Callback Hell (Pyramid of Doom)**
 
 ```js
 doSomething(function(result) {
@@ -495,7 +495,7 @@ doSomething(function(result) {
 
 > ❌ Hard to read and maintain
 
-#### 3. Promises
+**3. Promises**
 
 ```js
 doSomething()
@@ -507,7 +507,7 @@ doSomething()
 
 > ✅ More manageable and readable than nested callbacks
 
-#### 4. Async/Await (Modern Approach)
+**4. Async/Await (Modern Approach)**
 
 ```js
 async function run() {
@@ -525,7 +525,7 @@ run();
 
 > ✅ Cleaner syntax with built-in error handling using `try/catch`
 
-#### 🔄 Example: Reading Files in Sequence
+**🔄 Example: Reading Files in Sequence**
 
 ```js
 const fs = require('fs').promises;
@@ -538,7 +538,7 @@ async function readFiles() {
 readFiles();
 ```
 
-#### 🧭 Summary
+**🧭 Summary**
 
 | Technique | Description |
 |----------|-------------|
@@ -551,7 +551,7 @@ readFiles();
 
 `package.json` is a file that contains metadata about your Node.js project, such as its name, version, dependencies, and scripts. It is used by the Node.js package manager, npm, to manage the project's dependencies and build process.
 
-#### 🔧 Key Purposes of package.json :
+**🔧 Key Purposes of package.json :**
 
 - Project Metadata
 
@@ -563,7 +563,7 @@ readFiles();
 
 - Project Configuration
 
-#### 🧱 Basic Example
+**🧱 Basic Example**
 
 ```json
 {
@@ -585,7 +585,7 @@ readFiles();
 ```
 
 
-#### 📄 Key Fields
+**📄 Key Fields**
 
 | Field              | Description |
 |-------------------|-------------|
@@ -600,26 +600,17 @@ readFiles();
 | **`devDependencies`** | Packages only needed during development (e.g., testing tools, linters). |
 
 
-#### 🔄 Common Commands Related to `package.json`
+**🔄 Common Commands Related to `package.json`**
 
 - `npm init` – Initializes a new `package.json` interactively.
-
 - `npm init -y` – Creates a `package.json` with default values.
-
 - `npm install <pkg>` – Installs and adds to `dependencies`.
-
 - `npm install <pkg> --save-dev` – Installs and adds to `devDependencies`.
-
 - `npm run <script>` – Executes a defined `script`.
-
 - `npm install nodemon --save-dev` - Installs `nodemon` as a development dependency.
-
 - `npm install express` - Installs `express` as a dependency.
-
 - `npm update` - Updates all dependencies to their latest versions.
-
 - `npm uninstall <pkg>` - Removes a package from `dependencies` or `devDependencies`.
-
 - `npm uninstall express` - Removes `express` from `dependencies`.
 
 #### ❓ What are the most commonly used libraries in NodeJS?
@@ -646,7 +637,7 @@ In Node.js, `dependencies` and `devDependencies` are two sections in the `packag
 
 Error handling in Node.js is essential to building stable, secure, and reliable applications. Node.js uses both synchronous and asynchronous patterns, so error handling depends on the type of cod. you're writing.
 
-#### 1. Try-Catch (for synchronous code or `async/await`)
+**1. Try-Catch (for synchronous code or `async/await`)**
 
 ```javascript
 try {
@@ -655,9 +646,9 @@ try {
     // Handle the error
 }
 ```
-#### ✅ Use this for synchronous code or async/await functions.
+✅ Use this for synchronous code or async/await functions.
 
-#### 2. Async/Await with Try-Catch
+**2. Async/Await with Try-Catch**
 
 ```javascript
 async function myFunction() {
@@ -668,9 +659,10 @@ async function myFunction() {
     }
 }
 ```
-#### ✅ Use this for async/await functions.
+✅ Use this for async/await functions.
 
-#### 3. Callback Pattern (Error-First Callbacks)
+**3. Callback Pattern (Error-First Callbacks)**
+
 Node.js uses an error-first callback pattern. The first argument in the callback is reserved for errors.
 
 ```javascript
@@ -682,7 +674,8 @@ fs.readFile('file.txt', 'utf8', (err, data) => {
 });
 ```
 
-#### 4. Event Emitters (`.on('error')`)
+**4. Event Emitters (`.on('error')`)**
+
 Some Node.js core modules (like streams) emit `error` events.
 
 ```javascript
@@ -693,7 +686,8 @@ stream.on('error', (err) => {
 });
 ```
 
-5. Global Error Handling (Use with caution)
+**5. Global Error Handling (Use with caution)**
+
 - Uncaught exceptions
 
 ```javascript
@@ -712,7 +706,8 @@ process.on('unhandledRejection', (reason, promise) => {
 });
 ```
 
-6. Custom Error Classes
+**6. Custom Error Classes**
+
 - For better error structure and control :
 
 ```javascript
@@ -741,7 +736,7 @@ Promises can be in one of three states:
 - **Fulfilled** : The operation completed successfully.
 - **Rejected** : The operation failed.
 
-#### 🧠 Basic Syntax
+**🧠 Basic Syntax**
 
 
 ```javascript
@@ -766,7 +761,7 @@ myPromise
 
 ```
 
-#### ✅ Using Promises with Async/Await
+✅ Using Promises with Async/Await
 
 ```javascript
 function delay(ms) {
@@ -782,7 +777,8 @@ async function run() {
 run();
 ```
 
-#### 📌 Built-in Promise-Based APIs in Node.js
+**📌 Built-in Promise-Based APIs in Node.js**
+
 Many modern Node.js APIs (like `fs.promises`) return Promises :
 
 
@@ -801,7 +797,7 @@ async function readFile() {
 readFile();
 ```
 
-#### 📌 Promise.all
+**📌 Promise.all**
 
 You can use `Promise.all` to run multiple promises in parallel and wait for all of them to complete:
 
@@ -822,7 +818,7 @@ Promise.all([promise1, promise2])
     });
 ```
 
-#### 🧵 Wrapping a Callback in a Promise
+**🧵 Wrapping a Callback in a Promise**
 
 ```javascript
 const fs = require('fs');
